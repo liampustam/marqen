@@ -20,10 +20,21 @@ def conncet_db():
 
     return conn
 
+
 @app.route("/")
 def index():
     return render_template("homepage.html.jinja")
 
-@app.route("/")
+@app.route("/browse")
 def browse():
-    return render_template("browse.html.jinja")
+    connection = conncet_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT * FROM `Product` ")
+
+    result = cursor.fetchall()
+
+    connection.close()
+
+    return render_template("browse.html.jinja", products=result)

@@ -7,5 +7,17 @@
   </head>
 <body>
     {% include "components/navbar.html.jinja"%}
-    
+
+    <main class="grid grid-cols-4 gap-3 ml-15">
+        {% for x in products %}
+            <div class="flex flex-col">
+                <img class="max-h-100 max-w-100 border-black border-10px" src=" {{ x['Image'] }}">
+                {{ x["Name"] }}<br>
+                ${{ x["Price"] }}<br>
+                {{ x["Size"]}}<br>
+
+            </div> 
+        {% endfor %}
+    </main>
 </body>
+</html>
