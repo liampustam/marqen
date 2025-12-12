@@ -25,6 +25,15 @@ def conncet_db():
 def index():
     return render_template("homepage.html.jinja")
 
+@app.route("/login")
+def login():
+    return render_template("login.html.jinja")
+
+@app.route("/register")
+def register():
+    return render_template("register.html.jinja")
+
+
 @app.route("/browse")
 def browse():
     connection = conncet_db()

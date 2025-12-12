@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href= "/static/product/stycles.css" rel="stylesheet" >
+    <title>Login Page</title>
+  </head>
+  <body>
+  {% include "components/navbar.html.jinja"%}
+    
+ <div class="flex items-center justify-center bg-gray-50 min-h-screen">
+
+    <div>
+        <form
+            action="https://form-to-email.steam-center.workers.dev/"
+            method="post"
+        >
+            <input hidden name="send-to" value="lpustam@brooklynsteamcenter.org">
+
+            <label>Email:</label>
+            <br>
+            <input type="text"  required name="email" class="border">
+            <br><br>
+
+            <label>Password:</label>
+            <br>
+            <input type="password" id="password" required name="password" class="border">
+            <br><br>
+
+            <button class="bg-white text-deco px-4 py-2 rounded hover:bg-sky-700 hover:text-white" type="submit">
+                <i data-lucide="send"></i> Login
+            </button>
+
+            <p class="mt-4">Don't have an account?</p>
+            <a class="text-blue-600" href="/register">Register here</a>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>
