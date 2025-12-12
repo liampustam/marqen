@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href= "/static/product/stycles.css" rel="stylesheet" >
+  </head>
+  <body>
+  {% include "components/navbar.html.jinja"%}
+    
+    <div class="grid grid-cols-2">
+        <div>
+            <img class="max-h-100 max-w-100 border-black border-10px" src=" {{ product ['Image'] }}">
+            <div>{{ product ["Name"] }}<div>
+            <div>${{ product ["Price"] }}</div>
+            <div class="text-red-400">{{ product ["Size"]}}</div>
+            <div> Desctiption: {{ product ["Description"]}}</div>
+        </div>
+
+
+   
+        <div>
+            <div> Desctiption: {{ product ["Description"]}}</div>
+        </div>
+    
+    
+
+
+
+    </div>
+  </body>
+</html>
