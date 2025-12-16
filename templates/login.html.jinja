@@ -9,24 +9,24 @@
   </head>
   <body>
   {% include "components/navbar.html.jinja"%}
+{%for message in get_flashed_messages() %}
+  <li class = "text-center">{{ message }}</li>
+{% endfor %}
     
  <div class="flex items-center justify-center bg-gray-50 min-h-screen">
 
     <div>
         <form
-            action="https://form-to-email.steam-center.workers.dev/"
             method="post"
         >
-            <input hidden name="send-to" value="lpustam@brooklynsteamcenter.org">
-
             <label>Email:</label>
             <br>
-            <input type="text"  required name="email" class="border">
+            <input required type="email" name="email" class="border">
             <br><br>
 
             <label>Password:</label>
             <br>
-            <input type="password" id="password" required name="password" class="border">
+            <input name="password" required type="password" class="border">
             <br><br>
 
             <button class="bg-white text-deco px-4 py-2 rounded hover:bg-sky-700 hover:text-white" type="submit">

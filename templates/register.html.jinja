@@ -8,30 +8,29 @@
   </head>
   <body>
   {% include "components/navbar.html.jinja"%}
-    <h1>Register Here</h1>
+{%for message in get_flashed_messages() %}
+  <li class = "text-center">{{ message }}</li>
+{% endfor %}
+
+    <form  method= "post" class = "items-center  m-20 shadow-black shadow-md mr-160 ml-160 p-4 mt-50">
+        <label>Name</label>
+        <input required type = "text" name = "name">
+        <br>
+        <label> Email </label>
+        <input required type = "username" name ="email" >
+        <br>
+        <label>Password</label>
+        <input required type = "password" name = "password" >
+        <br>
+        <label>Password confermation </label>
+        <input required type = "password" name = "confirm_password">
+        <br>
+        <label>Address</label>
+        <input required type = "text" name = "address">
 
 
-      <div>
-        <label>Your Name:</label>
-          <br>
-            <input type="text" id="name" required name="name">
-            <br>
-        <label>Email:</label>
-          <br>
-            <input  type="text"  id="email" required name="email">
-            <br>
-          <label>Password:</label>
-            <br>
-            <input type="password" id="password"  required name="password" >
-            <br>
-        
-          <label>Confrim Password:</label>
-            <br>
-            <input type="password" id="confirm_password" required name="confirm_password" >
-        
-            <br>
-            <br>
+        <button class = "shadow-md bg-gray-200 p-2 ml-4 mt-2 corsur-pointer">Login</button>
+    </form>
           <button type="submit" onclick="registerUser()">Register</button>
-      </div>
   </body>
 </html>
