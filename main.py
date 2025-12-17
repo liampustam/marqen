@@ -1,7 +1,6 @@
 from flask import Flask, render_template , request, flash ,redirect
 import pymysql
-from flask_login import LoginManager, login_user
-
+from flask_login import LoginManager, login_user , logout_user, login_required
 from dynaconf import Dynaconf
 
 app = Flask(__name__)
@@ -14,7 +13,7 @@ app.secret_key = config.secret_key
 login_manager = LoginManager( app )
 
 class User:
-    is_authentocated = True
+    is_authenticated = True
     is_active = True
     is_anonymous = False
 
@@ -121,8 +120,15 @@ def login():
             login_user(User ( result ) )
             return redirect ("/browse")
         
-        
+
     return render_template("login.html.jinja")
+
+@app.route("/logout", methods=['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    flash("Successfully logged out")
+    return redirect ("/login")
 
 
 @app.route("/browse")
