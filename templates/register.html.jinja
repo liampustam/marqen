@@ -8,27 +8,39 @@
   </head>
   <body>
   {% include "components/navbar.html.jinja"%}
-      <div>
-        <label>Your Name:</label>
+{%for message in get_flashed_messages() %}
+  <li class = "text-center">{{ message }}</li>
+{% endfor %}
+
+
+    <div class="flex items-center justify-center min-h-screen">
+        <div>
+          <label>Name:</label>
           <br>
-            <input type="text" id="name" required name="name">
+          <input name="name" required type="name" class="border">
             <br>
-        <label>Email:</label>
-          <br>
-            <input  type="text"  id="email" required name="email">
+          <label>Email:</label>
+            <br>
+          <input  name="text" required type="email" class="border">
             <br>
           <label>Password:</label>
             <br>
-            <input type="password" id="password"  required name="password" >
+          <input name="password"  required type="password" class="border">
             <br>
-        
           <label>Confrim Password:</label>
             <br>
-            <input type="password" id="confirm_password" required name="confirm_password" >
-        
+          <input name="confirm_password" required type="password" class="border" >
             <br>
+          <label>Address:</label>
             <br>
-          <button type="submit" onclick="registerUser()">Sign Up</button>
-      </div>
+          <input required type = "text" name = "address" class="border">
+          <br>
+          <br>
+          <br>
+            <button class="text-deco px-4 py-2 rounded hover:bg-sky-700 hover:text-white"
+            type="submit"
+            onclick="registerUser()">Sign Up</button>
+          </div>
+    </div>
   </body>
 </html>
