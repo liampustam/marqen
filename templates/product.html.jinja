@@ -9,14 +9,23 @@
   <body class>
   {% include "components/navbar.html.jinja"%}
     
-    <div class="grid grid-cols-2">
-            <img class="max-h-100 max-w-100 border-black border-10px" src=" {{ product ['Image'] }}">
-            <div>{{ product ["Name"] }}<div>
+    <div class="grid grid-cols-2 ml-20 gap-15 mr-20">
+            <img class="h-175 w-300 border-black border-[10px] justify-center fill" src=" {{ product ['Image'] }}">
+            <div class="text-xl">{{ product ["Name"] }}<div>
+            <br>
             <div>${{ product ["Price"] }}</div>
-            <div class="text-red-400">{{ product ["Size"]}}</div>
-          <div class="flex flex-col">
+            <br>
+            <div class="text">{{ product ["Size"]}}</div>
+            <br>
+          <div class="flex flex-co text-wrap">
             <div> Desctiption: {{ product ["Description"]}}</div>
           </div>
     </div>
+           <br>
+           <br>
+            <button class="text-white text-deco px-25 py-2 rounded-lg bg-blue-700 hover:text-white justify-center ml-35 " type="submit">
+                <i data-lucide="send"></i> Add to bag
+            </button>
+
   </body>
 </html>

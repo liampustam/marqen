@@ -1,4 +1,4 @@
-from flask import Flask, render_template , request, flash ,redirect
+from flask import Flask, render_template , request, flash ,redirect, abort
 import pymysql
 from flask_login import LoginManager, login_user , logout_user, login_required
 from dynaconf import Dynaconf
@@ -11,6 +11,7 @@ config = Dynaconf(settings_file=["settings.toml"])
 app.secret_key = config.secret_key
 
 login_manager = LoginManager( app )
+login_manager.login_view = '/login'
 
 class User:
     is_authenticated = True
@@ -157,6 +158,9 @@ def product_page(product_id):
     result = cursor.fetchone()
 
     connection.close()
+    
+    if result is None:
+        abort(404)
 
     
     return render_template("product.html.jinja", product = result)
