@@ -23,9 +23,14 @@
     </div>
            <br>
            <br>
-            <button class="text-white text-deco px-25 py-2 rounded-lg bg-blue-700 hover:text-white justify-center ml-35 " type="submit">
-                <i data-lucide="send"></i> Add to bag
+           
+           <form method ="post" action="/product/{{ product['ID']}}/add_to_cart">
+           <label>Qty:</label>
+           <input name="qty" type="number" value="1" min="1" max="10">
+            <button class="text-white text-deco px-25 py-2 rounded-lg bg-blue-700 hover:text-white justify-center ml-3" type="submit">
+                <i data-lucide="send"></i> Add to cart
             </button>
+            </form>
 
   </body>
 </html>

@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href= "/static/styles.css" rel="stylesheet" >
+
+  </head>
+<body>
+    {% include "components/navbar.html.jinja"%}
+
+    <main class="max-w-4xl wm-auto p-6 mb-5">
+        {% if cart|length == 0 %}
+        <p>Your cart is empty</p>
+        {% endif %}
+        <h1 class="text-xl font-bold">Your Cart</h1>
+            {% for x in cart %}
+                <div class="cart-row">
+                    <img src="{{x['Image']}}">
+                    <div>{{x['Name']}}</div>
+                    <div>
+                        <form method="post" action="/cart/{{x['ProductID']}}/update_qty">
+                        <input class="w-full" name="qty" type="number" value="{{x['Quantity']}}">
+                        <button type="submit">Update</button>
+                        </form>
+                    </div> 
+                    <div>
+                        <form method="post" action="/cart/{{x['ProductID']}}/remove">
+                        <button type="submit">Remove</button>
+                    </div>
+                    <div>$ {{x['Price'] * x['Quantity']}}</div>
+                </div>
+            {% endfor %}
+        
+     </main>
+</body>
+</html>

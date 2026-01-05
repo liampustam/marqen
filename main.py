@@ -1,6 +1,6 @@
 from flask import Flask, render_template , request, flash ,redirect, abort
 import pymysql
-from flask_login import LoginManager, login_user , logout_user, login_required
+from flask_login import LoginManager, login_user , logout_user, login_required, current_user
 from dynaconf import Dynaconf
 
 app = Flask(__name__)
@@ -164,3 +164,79 @@ def product_page(product_id):
 
     
     return render_template("product.html.jinja", product = result)
+
+@app.route("/product/<product_id>/add_to_cart", methods =['POST'])
+@login_required
+def add_to_cart(product_id):
+
+    quantity = request.form["qty"]
+
+    connection = conncet_db()
+    # This variable connects the page to the data base 
+    cursor = connection.cursor()
+
+    cursor.execute(
+        """INSERT INTO `Cart` (`Quantity`, `ProductID`,`UserID`)  
+        VALUES (%s, %s, %s)
+        ON DUPLICATE KEY UPDATE
+        `Quantity` = `Quantity` + %s
+        """, (quantity, product_id, current_user.id, quantity))
+
+    connection.close()
+    return redirect("/cart")
+
+@app.route ("/cart")
+@login_required
+def cart():
+    connection = conncet_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute(
+        """SELECT * FROM `Cart` 
+        Join `Product` ON `Cart`.`ProductID` = `Product`.`ID` WHERE `Cart`.`UserID` = %s""", (current_user.id))
+
+    result = cursor.fetchall()
+
+    connection.close()
+
+    return render_template("cart.html.jinja", cart = result)
+
+@app.route("/cart/<product_id>/remove", methods=['POST'])
+@login_required
+def remove_from_cart(product_id):
+
+    connection = conncet_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        DELETE FROM `Cart`
+        WHERE `ProductID` = %s AND `UserID` = %s
+  """, (product_id, current_user.id))
+    
+    connection.close()
+
+    return redirect ("/cart")
+
+
+
+@app.route("/cart/<product_id>/update_qty", methods=['POST'])
+@login_required
+def update_cart(product_id):
+    new_qty = request.form['qty']
+
+    connection = conncet_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        UPDATE `Cart`
+        SET `Quantity` = %s
+        WHERE `ProductID` = %s AND `UserID` = %s
+  """, (new_qty, product_id, current_user.id))
+    
+    connection.close()
+
+    return redirect ("/cart")
+
