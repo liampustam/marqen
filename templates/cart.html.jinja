@@ -10,29 +10,50 @@
 <body>
     {% include "components/navbar.html.jinja"%}
 
-    <main class="max-w-4xl wm-auto p-6 mb-5">
-        {% if cart|length == 0 %}
-        <p>Your cart is empty</p>
-        {% endif %}
-        <h1 class="text-xl font-bold">Your Cart</h1>
-            {% for x in cart %}
-                <div class="cart-row">
-                    <img src="{{x['Image']}}">
-                    <div>{{x['Name']}}</div>
-                    <div>
-                        <form method="post" action="/cart/{{x['ProductID']}}/update_qty">
-                        <input class="w-full" name="qty" type="number" value="{{x['Quantity']}}">
-                        <button type="submit">Update</button>
-                        </form>
-                    </div> 
-                    <div>
-                        <form method="post" action="/cart/{{x['ProductID']}}/remove">
-                        <button type="submit">Remove</button>
-                    </div>
-                    <div>$ {{x['Price'] * x['Quantity']}}</div>
-                </div>
-            {% endfor %}
-        
-     </main>
+<main class="max-w-5xl mx-auto p-6 mb-5">
+
+    {% if cart|length == 0 %}
+        <p class="text-5xl text-center italic font-bold">Your cart is empty</p>
+    {% else %}
+        <h1 class="text-4xl font-bold mb-8 text-center">Your Cart</h1>
+    {% endif %}
+
+    {% for x in cart %}
+        <div class="grid grid-cols-4 gap-6 items-center border-b pb-6 mb-6">
+
+            <img
+                class="max-h-48 mx-auto border border-black col-span-1"
+                src="{{ x['Image'] }}"
+            >
+
+            <div class="col-span-3 text-2xl font-semibold">
+                {{ x['Name'] }}
+            </div>
+
+          
+            <div class="col-span-2">
+                <label class="block text-sm mb-1">Quantity</label>
+                <form method="post" action="/cart/{{ x['ProductID'] }}/update_qty">
+                    <input class="border p-2 w-24" name="qty" type="number" min="1" value="{{ x['Quantity'] }}" onchange="this.form.submit()">
+                </form>
+            </div>
+
+            <div class="col-span-1">
+                <form method="post" action="/cart/{{ x['ProductID'] }}/remove">
+                    <button type="submit" class="text-red-600 hover:underline">
+                        Remove
+                    </button>
+                </form>
+            </div>
+
+            <div class="col-span-1 text-xl font-bold text-right">
+                $ {{ x['Price'] * x['Quantity'] }}
+            </div>
+
+        </div>
+    {% endfor %}
+
+</main>
+
 </body>
 </html>
