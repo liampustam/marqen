@@ -28,7 +28,7 @@ class User:
         return str(self.id)
     @login_manager.user_loader
     def load_user(user_id):
-        connection = conncet_db()
+        connection = connect_db()
 
         cursor = connection.cursor()
 
@@ -44,7 +44,7 @@ class User:
         return User(result)
 
 
-def conncet_db():
+def connect_db():
     conn = pymysql.connect(
         host="db.steamcenter.tech",
         user="lpustam",
@@ -80,7 +80,7 @@ def register():
         elif len(password) < 6:
             flash("password is too short")
         else:
-            connection = conncet_db()
+            connection = connect_db()
 
             cursor = connection.cursor()
         try:
@@ -103,7 +103,7 @@ def login():
         email = request.form['email']
         password = request.form['password']
 
-        connection = conncet_db()
+        connection = connect_db()
 
         cursor = connection.cursor()
 
@@ -134,7 +134,7 @@ def logout():
 
 @app.route("/browse")
 def browse():
-    connection = conncet_db()
+    connection = connect_db()
 
     cursor = connection.cursor()
 
@@ -149,7 +149,7 @@ def browse():
 @app.route("/product/<product_id>")
 def product_page(product_id):
 
-    connection = conncet_db()
+    connection = connect_db()
 
     cursor = connection.cursor()
 
@@ -171,8 +171,8 @@ def add_to_cart(product_id):
 
     quantity = request.form["qty"]
 
-    connection = conncet_db()
-    # This variable connects the page to the data base 
+    connection = connect_db()
+ 
     cursor = connection.cursor()
 
     cursor.execute(
@@ -188,25 +188,29 @@ def add_to_cart(product_id):
 @app.route ("/cart")
 @login_required
 def cart():
-    connection = conncet_db()
+    connection = connect_db()
 
     cursor = connection.cursor()
 
     cursor.execute(
         """SELECT * FROM `Cart` 
-        Join `Product` ON `Cart`.`ProductID` = `Product`.`ID` WHERE `Cart`.`UserID` = %s""", (current_user.id))
+        Join `Product` ON `Cart`.`ProductID` = `Product`.`ID` WHERE `Cart`.`UserID` = %s""", (current_user.id,))
 
     result = cursor.fetchall()
 
     connection.close()
 
-    return render_template("cart.html.jinja", cart = result)
+    total = 0
+    for item in result:
+        total += item['Price'] * item['Quantity']
+
+    return render_template("cart.html.jinja", cart=result, total=total)
 
 @app.route("/cart/<product_id>/remove", methods=['POST'])
 @login_required
 def remove_from_cart(product_id):
 
-    connection = conncet_db()
+    connection = connect_db()
 
     cursor = connection.cursor()
 
@@ -226,7 +230,7 @@ def remove_from_cart(product_id):
 def update_cart(product_id):
     new_qty = request.form['qty']
 
-    connection = conncet_db()
+    connection = connect_db()
 
     cursor = connection.cursor()
 
@@ -239,4 +243,5 @@ def update_cart(product_id):
     connection.close()
 
     return redirect ("/cart")
+
 

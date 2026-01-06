@@ -13,18 +13,18 @@
 <main class="max-w-5xl mx-auto p-6 mb-5">
 
     {% if cart|length == 0 %}
-        <p class="text-5xl text-center italic font-bold">Your cart is empty</p>
+        <div class="flex flex-col items-center justify-center">
+            <p class="text-5xl text-center italic font-bold">Your cart is empty</p>
+            <a href="/browse" class="justify-center">Start Shopping</a>
+        </div>
     {% else %}
-        <h1 class="text-4xl font-bold mb-8 text-center">Your Cart</h1>
+        <h1 class="text-4xl font-bold mb-8 text-center"> Cart Total: ${{total}}</h1>
     {% endif %}
 
     {% for x in cart %}
         <div class="grid grid-cols-4 gap-6 items-center border-b pb-6 mb-6">
 
-            <img
-                class="max-h-48 mx-auto border border-black col-span-1"
-                src="{{ x['Image'] }}"
-            >
+            <img class="max-h-48 mx-auto border border-black col-span-1" src="{{ x['Image'] }}">
 
             <div class="col-span-3 text-2xl font-semibold">
                 {{ x['Name'] }}
@@ -49,10 +49,13 @@
             <div class="col-span-1 text-xl font-bold text-right">
                 $ {{ x['Price'] * x['Quantity'] }}
             </div>
+            <div>
+
+            </div>
 
         </div>
     {% endfor %}
-
+ 
 </main>
 
 </body>
