@@ -19,6 +19,9 @@
         </div>
     {% else %}
         <h1 class="text-4xl font-bold mb-8 text-center"> Cart Total: ${{total}}</h1>
+        <button>
+            <a href="/checkout">Checkout</a>
+        </button>
     {% endif %}
 
     {% for x in cart %}

@@ -238,10 +238,53 @@ def update_cart(product_id):
         UPDATE `Cart`
         SET `Quantity` = %s
         WHERE `ProductID` = %s AND `UserID` = %s
-  """, (new_qty, product_id, current_user.id))
+  """, (new_qty, product_id, current_user.id,))
     
     connection.close()
 
     return redirect ("/cart")
+
+
+@app.route ("/checkout", methods=['GET', 'POST'])
+@login_required
+def checkout():
+    connection = connect_db()
+
+    cursor = connection.cursor()
+
+    cursor.execute(
+        """SELECT * FROM `Cart` 
+        Join `Product` ON `Cart`.`ProductID` = `Product`.`ID` WHERE `Cart`.`UserID` = %s""", (current_user.id,))
+    total = 0
+    
+    
+
+
+    
+    result = cursor.fetchall()
+
+    if request.method == 'POST':
+        #create the sale in database
+        cursor.execute("INSERT INTO `Sale` (`UserID`) VALUES (%s)", (current_user.id, ))
+        #store products bought
+        sale_id = cursor.lastrowid
+        for item in result:
+            cursor.execute(
+                """INSERT INTO `SaleCart` (`SaleID`, `ProductID`, `Quantity`)
+                VALUES (%s, %s, %s)
+                """,  ( sale_id, item['ProductID'], item['Quantity'], ))
+        #empty the cart
+        cursor.execute("DELETE FROM `Cart` WHERE `UserID` = %s", (current_user.id, ))
+        #thank you screen
+        return redirect("/thankyou")
+
+    connection.close()
+
+    for item in result:
+        total += item['Price'] * item['Quantity']
+    
+
+
+    return render_template("checkout.html.jinja", checkout=result, total=total)
 
 
