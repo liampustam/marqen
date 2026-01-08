@@ -18,10 +18,12 @@
             <a href="/browse" class="justify-center">Start Shopping</a>
         </div>
     {% else %}
-        <h1 class="text-4xl font-bold mb-8 text-center"> Cart Total: ${{total}}</h1>
-        <button>
-            <a href="/checkout">Checkout</a>
-        </button>
+        <div class="flex flex-col items-center justify-center mb-12">
+            <h1 class="text-4xl font-bold mb-8 text-center"> Cart Total: ${{total}}</h1>
+            <button class="text-deco px-4 py-2 rounded hover:bg-sky-700 hover:text-white">
+                <a href="/checkout">Checkout</a>
+            </button>
+        </div>
     {% endif %}
 
     {% for x in cart %}

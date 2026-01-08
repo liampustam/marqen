@@ -7,14 +7,11 @@
 
     <link href= "/static/styles.css" rel="stylesheet" >
   </head>
-  
+<body>
   {% include "components/navbar.html.jinja"%}
-<main class="max-w-5xl mx-auto p-6 mb-5">
-
-    <div class="grid grid-flow-col grid-rows-2 gap-10">
+<main class="max-w-5xl mx-auto p-6 mb-5 grid grid-cols-2 gap-10">
+       <div class="col-span-1">
         {% for x in checkout %}
-        
-                <div class="col-span-2 border p-6">
                     <div class="grid grid-cols-4 gap-6 items-center border-2 ">
                         <img class="max-h-48 mx-auto  border-black col-span-1" src="{{ x['Image'] }}">
                         <div class="col-span-3 text-2xl font-semibold">
@@ -22,41 +19,39 @@
                             $ {{ x['Price'] * x['Quantity'] }}
                         </div>
                     </div>
-                </div>
-
+                
         {% endfor %}
+         </div>        
 
-        
-            <div class="col-span-1 border p-6">
+
+        <div class="col-span-1 border p-6">
                 <h1>Shipping Address:</h1>
              <form method="post">
                 <label>Street:</label>
-                <br>
+            <br>
                 <input required type="text" name="street" class="border">
-                <br><br>
+            <br>  
                 <label>State:</label>
-                <br>
+            <br>   
                 <input name="state" required type="text" class="border">
-                <br><br>
+            <br>    
                 <label>City:</label>
-                <br>
+            <br>
                 <input name="city" required type="text" class="border">
-                <br><br>
+            <br>
                 <label>ZipCode:</label>
+            <br>
+                <input name="zipcode" required type="text" class="border"> 
                 <br>
-                <input name="zipcode" required type="text" class="border">
-                <br>
-                <form action="submit" method="post">
+            <button type="submit" class="text-deco px-4 py-2 rounded hover:bg-sky-700 hover:text-white">          
+              Buy
+            </button>   
+             </form>
 
-                    <a href="/thankyou">
-                        <button class=" text-deco px-4 py-2 rounded hover:bg-sky-700 hover:text-white" type="submit">
-                         Buy
-                        </button>
-                    </a>
-              Price:{{total}}
+
+              Price: {{total}}
                
-            </div>
-    </div>
+        </div>
 </main>
-  </body>
+</body>
 </html>

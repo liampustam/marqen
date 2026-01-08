@@ -92,6 +92,7 @@ def register():
         except pymysql.err.IntegrityError:
             flash("email already exists")
         else:  
+            flash("Registration successful! Please log in.")
             return redirect ("/login")
         
     return render_template("register.html.jinja")
@@ -286,5 +287,10 @@ def checkout():
 
 
     return render_template("checkout.html.jinja", checkout=result, total=total)
+
+@app.route ("/thankyou")
+@login_required
+def thankyou():
+    return render_template("thankyou.html.jinja")
 
 

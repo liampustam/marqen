@@ -13,34 +13,34 @@
 {% endfor %}
 
 
-    <div class="flex items-center justify-center min-h-screen">
-        <div>
-          <label>Name:</label>
-          <br>
-          <input name="name" required type="name" class="border">
+    <form method="post">
+      <div class="flex items-center justify-center min-h-screen">
+          <div>
+            <label>Name:</label>
             <br>
-          <label>Email:</label>
+            <input name="name" required type="name" class="border">
+              <br>
+            <label>Email:</label>
+              <br>
+            <input  name="email" required type="email" class="border">
+              <br>
+            <label>Password:</label>
+              <br>
+            <input name="password"  required type="password" class="border">
+              <br>
+            <label>Confrim Password:</label>
+              <br>
+            <input name="confirm_password" required type="password" class="border" >
+              <br>
+            <label>Address:</label>
+              <br>
+            <input required type = "text" name = "address" class="border">
             <br>
-          <input  name="text" required type="email" class="border">
             <br>
-          <label>Password:</label>
             <br>
-          <input name="password"  required type="password" class="border">
-            <br>
-          <label>Confrim Password:</label>
-            <br>
-          <input name="confirm_password" required type="password" class="border" >
-            <br>
-          <label>Address:</label>
-            <br>
-          <input required type = "text" name = "address" class="border">
-          <br>
-          <br>
-          <br>
-            <button class="text-deco px-4 py-2 rounded hover:bg-sky-700 hover:text-white"
-            type="submit"
-            onclick="registerUser()">Sign Up</button>
-          </div>
-    </div>
+              <button class="text-deco px-4 py-2 rounded hover:bg-sky-700 hover:text-white">Sign Up</button>
+            </div>
+      </div>
+    </form>
   </body>
 </html>
