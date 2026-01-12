@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <link href= "/static/styles.css" rel="stylesheet" >
+  </head>
+<body>
+  {% include "components/navbar.html.jinja"%}
+
+
+{%for x in orders%}
+    <div class="border px-4 m-4 py-4 grid grid-cols-3 justify-center items-center">
+        <h1 class="text-xl col-span-2">
+        OrderID: {{ x['ID']}}
+        <br>
+        Date: {{ x['Timestamp']}}
+       
+        
+
+        </h1>
+
+        <h1 class="text-xl col-span-1">
+            <br>
+            Items: {{x['Quantity']}}
+            <br>
+            Price: ${{x['Total']}}
+        </h1>
+
+
+    </div>
+
+{%endfor%}
+  </body>
+</html>
