@@ -3,6 +3,9 @@ import pymysql
 from flask_login import LoginManager, login_user , logout_user, login_required, current_user
 from dynaconf import Dynaconf
 
+
+
+
 app = Flask(__name__)
 
 config = Dynaconf(settings_file=["settings.toml"])
@@ -312,8 +315,8 @@ def orderpage():
         GROUP BY `Sale`.`ID`;
         """, ( current_user.id,))
     
+    
     result = cursor.fetchall()
     connection.close()
-    return render_template("orderpage.html.jinja", orders=result)
-
+    return render_template("orderpage.html.jinja", orders=result,)
 

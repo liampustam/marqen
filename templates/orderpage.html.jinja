@@ -12,25 +12,21 @@
 
 
 {%for x in orders%}
-    <div class="border px-4 m-4 py-4 grid grid-cols-3 justify-center items-center">
-        <h1 class="text-xl col-span-2">
-        OrderID: {{ x['ID']}}
-        <br>
-        Date: {{ x['Timestamp']}}
-       
-        
-
-        </h1>
-
-        <h1 class="text-xl col-span-1">
-            <br>
-            Items: {{x['Quantity']}}
-            <br>
-            Price: ${{x['Total']}}
-        </h1>
-
-
+<div class=" m-10 px-4  grid grid-cols-3 border-3 divide-x-3 divide items-center">
+    <div class="py-4">
+        <h1 class="text-xl font-semibold">OrderID: {{ x['ID'] }}</h1>
+        <p>Date: {{ x['Timestamp'].strftime('%b-%d-%Y') }}</p>
     </div>
+
+    <div class="text-center h-full flex justify-center items-center">
+        <p class="text-xl">Pending</p>
+    </div>
+
+    <div class="text-right">
+        <p>Items: {{ x['Quantity'] }}</p>
+        <p>Price: ${{ x['Total'] }}</p>
+    </div>
+</div>
 
 {%endfor%}
   </body>
