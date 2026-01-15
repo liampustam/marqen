@@ -13,7 +13,7 @@
   <main class="max-w-6xl mx-auto px-6 py-10">
 
 
-  
+    
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
 
 
@@ -29,9 +29,15 @@
 
       
       <div class="space-y-4">
-        <h1 class="text-3xl font-bold">{{ product["Name"] }}</h1>
+        <h1 class="text-3xl font-bold">{{ product["Name"] }}
 
 
+        </h1>
+      {% if avg_rating %}
+    <p>Average Rating: {{ avg_rating | round(1) }}/5 ({{ review_count }} reviews)</p>
+    {% else %}
+    <p>No ratings yet</p>
+    {% endif %}
         <p class="text-2xl font-semibold ">
           ${{ product["Price"] }}
         </p>
@@ -75,7 +81,7 @@
       <h2 class="text-xl font-semibold mb-4">Leave a Review</h2>
 
 
-      <form method="post" class="space-y-4">
+      <form method="post" action="/product/{{product['ID']}}/add_review" class="space-y-4">
 
 
         <div>
@@ -126,6 +132,7 @@
             <p class="text-gray-700">
               {{ x["Comments"] }}
             </p>
+            {{ x['Timestamp'].strftime('%x') }}
           </div>
         {% else %}
           <p class="text-gray-500">No reviews yet.</p>

@@ -165,13 +165,43 @@ def product_page(product_id):
     cursor.execute(
         """SELECT * FROM `Review` 
         JOIN `User` ON `Review`.`UserID` = `User`.`ID`
-        WHERE `ProductID` = %s""", (product_id,))
-
+        WHERE `ProductID` = %s""",
+        (product_id,)
+    )
     reviews = cursor.fetchall()
+
+    cursor.execute(
+        """SELECT 
+        AVG(Rating) AS avg_rating,
+        COUNT(*) AS review_count
+        FROM `Review`
+        WHERE `ProductID` = %s
+        """,
+        (product_id,)
+    )
+    rating_stats = cursor.fetchone()
 
     connection.close()
 
-    return render_template("product.html.jinja", product=product, reviews=reviews)
+    return render_template("product.html.jinja", product=product, reviews=reviews, avg_rating=rating_stats['avg_rating'], review_count=rating_stats['review_count'])
+
+
+
+@app.route("/product/<product_id>/add_review", methods=['POST'])
+@login_required
+def add_review(product_id):
+    comments = request.form["comments"]
+    rating = request.form["rating"]
+
+    connection = connect_db()
+    cursor = connection.cursor()
+    cursor.execute(
+        """INSERT INTO `Review` (`Comments`, `Rating`, `ProductID`, `UserID`)
+        VALUES (%s, %s, %s, %s)
+        """, (comments, rating, product_id, current_user.id))
+    
+    connection.close()
+    return redirect(f"/product/{product_id}")
 
 
 
@@ -267,11 +297,13 @@ def checkout():
         Join `Product` ON `Cart`.`ProductID` = `Product`.`ID` WHERE `Cart`.`UserID` = %s""", (current_user.id,))
     total = 0
     
-    
 
-
-    
+       
     result = cursor.fetchall()
+
+    for item in result:
+        total += item['Price'] * item['Quantity']
+
 
     if request.method == 'POST':
         #create the sale in database
@@ -290,9 +322,7 @@ def checkout():
 
     connection.close()
 
-    for item in result:
-        total += item['Price'] * item['Quantity']
-    
+
 
 
     return render_template("checkout.html.jinja", checkout=result, total=total)
