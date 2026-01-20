@@ -64,6 +64,10 @@ def connect_db():
 def index():
     return render_template("homepage.html.jinja")
 
+@app.route("/error")
+def error():
+    return render_template("error.html.jinja")
+
 @app.route("/register", methods = ['POST', 'GET'])
 def register():
     if request.method == 'POST':
@@ -160,7 +164,8 @@ def product_page(product_id):
 
     if product is None:
         connection.close()
-        abort(404)
+        return render_template("error.html.jinja")
+        
 
     cursor.execute(
         """SELECT * FROM `Review` 
