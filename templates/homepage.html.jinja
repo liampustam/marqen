@@ -4,13 +4,52 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
-    <link href= "/static/styles.css" rel="stylesheet" >
+    <link href="/static/styles.css" rel="stylesheet">
+    <title>Home - My Shop</title>
   </head>
-  <body class= "bg-[url('/static/homebackground.png')] bg-fixed min-h-screen bg-no-repeat bg-cover bg-center">
-  {% include "components/navbar.html.jinja"%}
-    <h1 class="text-3xl font-bold underline">
-      My Home Page
-    </h1>
+  <body class="bg-gray-50 min-h-screen flex flex-col">
+
+    {% include "components/navbar.html.jinja" %}
+
+    <header class="bg-white shadow-sm">
+      <div class="max-w-6xl mx-auto px-6 py-20 text-center">
+        <h1 class="text-5xl font-bold text-gray-800 mb-4">
+          Welcome to My Shop
+        </h1>
+        <p class="text-gray-600 text-xl mb-6">
+          Discover the best products handpicked just for you.
+        </p>
+        <a href="/browse" class="bg-blue-700 text-white px-8 py-3 rounded-lg hover:bg-blue-800 transition">
+          Shop Now
+        </a>
+      </div>
+    </header>
+
+    <main class="flex-grow max-w-6xl mx-auto px-6 py-16">
+      <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Featured Products</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {% for product in products %}
+        <div class="bg-white border rounded-lg shadow-sm  flex flex-col">
+          <img 
+            src="{{ product['Image'] }}" 
+            alt="{{ product['Name'] }}" 
+            class="h-48 w-full object-contain border-b border-gray-200"
+          >
+          <div class="p-4 flex-1 flex flex-col">
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ product['Name'] }}</h3>
+            <p class="text-gray-600 mb-4">${{ product['Price'] }}</p>
+            <a href="/product/{{ product['ID'] }}" class="mt-auto bg-blue-700 text-white px-4 py-2 rounded-lg text-center hover:bg-blue-800 transition">
+              View Product
+            </a>
+          </div>
+        </div>
+        {% else %}
+        <p class="text-gray-500 col-span-full text-center">Coming soon</p>
+        {% endfor %}
+      </div>
+    </main>
+
+==
   </body>
 </html>
